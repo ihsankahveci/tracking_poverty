@@ -9,7 +9,7 @@ options(scipen=99) # turns of scientific notation
 # loading the list of variables available 
 vars_df =  tidycensus::load_variables(year = 2010, dataset = "sf1")
 vars_list = vars_df$name
-saveRDS(vars_df, "data/census_variables.RDS")
+write_csv(vars_df, "data/census_variables_csv")
 
 # counties
 WA_counties = get_decennial(
@@ -33,7 +33,7 @@ WA_tracts = get_decennial(
   sumfile = "sf1")
 
 saveRDS(WA_tracts, "data/WA_tracts.RDS")
-cat("\nCounty files are downloaded\n")
+cat("\nTract files are downloaded\n")
 
 # blocks
 WA_blocks = get_decennial(
@@ -45,6 +45,6 @@ WA_blocks = get_decennial(
   sumfile = "sf1")
 
 saveRDS(WA_blocks, "data/WA_blocks.RDS")
-cat("\nCounty files are downloaded\n")
+cat("\nBlock files are downloaded\n")
 
 
