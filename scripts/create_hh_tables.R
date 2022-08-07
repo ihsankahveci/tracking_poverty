@@ -1,5 +1,8 @@
 library(tidyverse)
 
+# provide the desired geographic units geoid"
+MY_GEOID = "53025011402"
+
 vars = read_csv("data/census_variables.csv")
 tracts = readRDS("data/WA_tracts.RDS") 
 
@@ -25,7 +28,11 @@ tracts_hh = tracts_temp %>%
   select(geoid:variable, label, value, total_hh, total_pop)
 
 
-  
+# create a pretty table
+tracts_hh %>%
+  filter(geoid == MY_GEOID) %>%
+  select(label, value, total_hh, total_pop) %>%
+  knitr::kable(caption = glue::glue("Household Counts for {MY_GEOID}"))
   
 
 
