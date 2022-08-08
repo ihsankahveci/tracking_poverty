@@ -1,4 +1,5 @@
 library(tidyverse)
+library(kableExtra)
 
 # provide the desired geographic units geoid"
 MY_GEOID = "53025011402"
@@ -31,8 +32,13 @@ tracts_hh = tracts_temp %>%
 # create a pretty table
 tracts_hh %>%
   filter(geoid == MY_GEOID) %>%
-  select(label, value, total_hh, total_pop) %>%
-  knitr::kable(caption = glue::glue("Household Counts for {MY_GEOID}"))
+  select(label, count = value, total_hh, total_pop) %>%
+  mutate(percent = round(count/total_hh*100, 2), .after = count) %>%
+  knitr::kable(caption = glue::glue("Household Counts from Census geoid: {MY_GEOID},
+                                    Total Households: {.$total_hh[1]},
+                                    Total Population: {.$total_pop[1]}")) %>%
+  kable_classic() %>%
+  kableExtra::remove_column(c(4,5))
   
 
 
